@@ -1,0 +1,78 @@
+<!--
+Nico Diz
+
+https://github.com/DizNicolasAmor/
+
+EditorMarkdown
+
+You can see this project here:
+
+https://diznicolasamor.github.io/EditorMarkdown
+https://codepen.io/DizNicolasAmor/pen/mBMbGa
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta name="viewport" content="height=device-height, initial-scale=0.8, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="index.css">
+    
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+
+    <title>Editor Markdown</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    
+    
+    <script type="text/babel">
+    //  let marked = require('marked');		// descomentar esta línea si el método no es reconocido. 
+
+      class App extends React.Component {   //declaro el componente App
+        constructor(props) {
+          super(props);
+          this.state = {
+            text: `# Título en h1\n## Subtítulo en h2\n\nUna lista: \n- Ítem.\n- Otro ítem.\n\n*Letra cursiva*\n\nLetra normal.\n\nEtcétera. \n\n[Un link](https://es.wikipedia.org/wiki/Hiperenlace)`   //es el texto que aparece por default
+          };
+        }
+
+        handleChange(event) {   //esta función permite actualizar los cambios que el usuario haga en el texto borrador. 
+          this.setState({ text: event.target.value });   //fijarse que esta función es llamada en el <textarea>, y el value corresponde a la property de este elemento (línea 60)
+        }
+
+        render() {
+          return (
+            <div class="container">
+                <h1 class="title">EDITOR MARKDOWN</h1> 
+
+	            <div className="row">
+	              <div className="col-sm-6">
+	                <h2 className="subtitle">Borrador</h2>
+	                <textarea 
+	                  id="borrador"
+	                  value={this.state.text}
+	                  onChange={this.handleChange.bind(this)}/>
+	              </div>
+	              <div className="col-sm-6">
+	                <h2 className="subtitle">Vista previa</h2>
+	                <div 
+	                  id="resultado"
+	                  dangerouslySetInnerHTML={{__html: marked(this.state.text)}} />
+	              </div>
+	            </div>
+	        </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
